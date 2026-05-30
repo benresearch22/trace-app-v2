@@ -952,6 +952,15 @@ export default function App() {
 
   const handleVoiceStub = () => alert(t.voiceStubMsg);
 
+  // Navigate to About screen and reset any in-progress state
+  // This is the "home" action triggered by clicking the TRACE logo
+  const goToAbout = () => {
+    setText("");
+    setBridge(null);
+    setSelectedEmos([]);
+    setView("about");
+  };
+
   const handleSubmit = async () => {
     if (!text.trim()) return;
     setLoading(true);
@@ -1021,17 +1030,24 @@ export default function App() {
               justifyContent: "space-between",
             }}
           >
-            <span
+            {/* TRACE logo — clickable to return to About screen */}
+            <button
+              onClick={goToAbout}
               style={{
                 fontFamily: C.mono,
                 fontSize: 11,
                 fontWeight: 500,
                 color: C.textStrong,
                 letterSpacing: "0.18em",
+                background: "transparent",
+                border: "none",
+                padding: 0,
+                cursor: view === "about" ? "default" : "pointer",
               }}
+              aria-label="Go to home"
             >
               {t.appName}
-            </span>
+            </button>
 
             {view === "about" && (
               <button
